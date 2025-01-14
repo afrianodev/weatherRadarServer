@@ -20,10 +20,10 @@ app.get('/weather', async (req, res) => {
         let url;
         if (q) {
             // Query by location name
-            url = `${BASE_URL}?key=${API_KEY}&q=${q}&aqi=no`;
+            url = `${BASE_URL}?key=${API_KEY}&q=${q}`;
         } else if (lat && lon) {
             // Query by geographic coordinates
-            url = `${BASE_URL}?key=${API_KEY}&q=${lat},${lon}&aqi=no`;
+            url = `${BASE_URL}?key=${API_KEY}&q=${lat},${lon}`;
         } else {
             return res.status(400).json({ error: 'Please provide a location (q) or coordinates (lat and lon).' });
         }
