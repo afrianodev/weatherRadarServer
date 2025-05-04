@@ -8,7 +8,11 @@ const router = Router()
 
 router.get('/', async (req, res) => {
 
-    const q = req.query.q || 'mexico'; //Expecting a 'q' city name in the query
+    const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress; //get the public adress
+    
+    //send the address to ipInfo api to get the city name of the current location
+    const geoRes = await axios.get(`https://ipinfo.io/${ip}?token=${process.env.IPINFO_TOKEN}`); 
+    const q = geoRes.data.city //send the city name as a query to weather api
 
     try {
         const response = await axios.get(`${process.env.BASE_URL}?key=${process.env.API_KEY}&q=${q}&days=7`)
